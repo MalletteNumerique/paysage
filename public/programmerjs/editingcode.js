@@ -11,8 +11,14 @@ var Paysage = window.Paysage || {};
     window.location.hash = codeId;
   };
 
+  Paysage.setCodeName = function (codeName) {
+    $('#codeName').val(codeName);
+  };
+
   Paysage.createCodeId = function () {
-    Paysage.setCodeId(window.chance.word());
+    var codeId = window.chance.word();
+    Paysage.setCodeName(codeId);
+    Paysage.setCodeId(codeId);
   };
 
   Paysage.getCode = function () {
@@ -23,19 +29,19 @@ var Paysage = window.Paysage || {};
     $('#code').val(code);
   };
 
-  Paysage.setObjectList = function (data, deleteCodeCB) {
-    var objectIds = data.objectIds;
+  Paysage.setObjectList = function (population, deleteCodeCB) {
     var $ul = $('<ul>');
-    $ul.append(objectIds.reverse().map(function (objectId) {
+    $ul.append(population.data.reverse().map(function (co) {
       var $deleteLink = $('<a class="glyphicon glyphicon-remove-circle" href="#">');
       $deleteLink.click(function (event) {
         event.preventDefault();
-        deleteCodeCB(objectId);
+        deleteCodeCB(co.codeObjectId);
       });
-      var $openLink = $("<a href='#'>").text(objectId);
+      var name = co.name.trim().length > 0 ? co.name : co.codeObjectId;
+      var $openLink = $("<a href='#" + co.codeObjectId + "'>").text(name);
       $openLink.click(function (event) {
         event.preventDefault();
-        Paysage.requestCode(objectId);
+        Paysage.requestCode(co.codeObjectId);
       });
       return $('<li>').append($openLink).append($deleteLink);
     }));
@@ -62,6 +68,11 @@ var Paysage = window.Paysage || {};
 
     setupDragAndDropListeners();
     $('#start-new-code').on('click', Paysage.startNewObject);
+
+    $('#codeName').on('change', function (event) {
+      Paysage.renameCode(document.getElementById('codeid').value,
+        event.target.value);
+    });
 
     // Initialize ACE code editor
     $('#code').each(function () {
