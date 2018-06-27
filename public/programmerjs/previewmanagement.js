@@ -22,5 +22,6 @@
     }
   }
 
+  $('#previewonoff').prop('checked', true);
   $('#previewonoff').on('change', switchframe);
 })();
