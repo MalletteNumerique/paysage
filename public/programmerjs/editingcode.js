@@ -69,11 +69,6 @@ var Paysage = window.Paysage || {};
     setupDragAndDropListeners();
     $('#start-new-code').on('click', Paysage.startNewObject);
 
-    $('#codeName').on('change', function (event) {
-      Paysage.renameCode(document.getElementById('codeid').value,
-        event.target.value);
-    });
-
     // Initialize ACE code editor
     $('#code').each(function () {
       var editor = window.ace.edit(this);

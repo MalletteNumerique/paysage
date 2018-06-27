@@ -40,21 +40,6 @@ describe('The Paysage programmer', function () {
     expect($('#new-object-dialog').css('display')).toBe('none');
   });
 
-  it('rename a code when codeName is changed', function () {
-    var codeId;
-    var newCodeName;
-    Paysage.renameCode = function (_codeId, newName) {
-      codeId = _codeId;
-      newCodeName = newName;
-    };
-    Paysage.programmerInit();
-    document.getElementById('codeid').value = 'codeId';
-    $('#codeName').val('nouveauNom');
-    $('#codeName').trigger('change');
-    expect(codeId).toBe('codeId');
-    expect(newCodeName).toBe('nouveauNom');
-  });
-
   it('can show the object list', function () {
     Paysage.setObjectList({
       data: [
