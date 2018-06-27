@@ -16,7 +16,6 @@ module.exports = {
       this.api.execute(`
         var codeNameElement = document.querySelector("#codeName");
         codeNameElement.value = "${codeName}";
-        codeNameElement.dispatchEvent(new Event("input"));
       `);
       return this;
     },
